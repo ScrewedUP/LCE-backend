@@ -13,5 +13,5 @@ app.use(
 const server = http.createServer(app);
 
 server.listen(8080, () => {
-  console.log("Server running on port 8080");
+  console.log("Backend server running on port 8080");
 });
