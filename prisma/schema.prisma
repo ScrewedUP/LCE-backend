@@ -1,0 +1,28 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+        
+
+
+model Startup_Profile {
+  user_id                 String  @id @default(cuid()) // Primary key
+  name                    String  // Required field
+  entity_name             String  // Required field
+  sector                  String  // Required field
+  categories              String  // Required field
+  year                    Int     // Required field
+  brand_name              String? // Optional field
+  entityRegistrationStatus Boolean? // Optional field
+  stage                   String? // Optional field
+  detailsText             String? // Optional text field
+  size                    Int     // Required field
+  incubation_status        Boolean // Required field
+  startupIndiaRegister     Boolean // Required field
+}
