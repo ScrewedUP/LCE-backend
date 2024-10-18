@@ -38,7 +38,7 @@ model Registration_Details {
   reg_certificate String //this stores a file path or reference
   gst             String
   ipr             Boolean
-  startup         Startup_Profile @relation(fields: [user_id], references: [user_id]) // Foreign key relation to Startup_Profile
+  startup         Startup_Profile @relation(fields: [user_id], references: [user_id],onDelete: Cascade) // Foreign key relation to Startup_Profile
 
   @@id([user_id, reg_number]) // Composite primary key
 }
@@ -52,7 +52,7 @@ model Registered_address {
   district    String
   pincode     Int
   user_id      String
-  startup     Startup_Profile @relation(fields: [user_id], references: [user_id]) // Foreign key relation to Startup_Profile
+  startup     Startup_Profile @relation(fields: [user_id], references: [user_id],onDelete: Cascade) // Foreign key relation to Startup_Profile
 
   @@id([user_id, addr_id]) // Primary key on userId
 }
@@ -66,7 +66,7 @@ model Founders {
   address     String
   equity      Int
   
-  startup     Startup_Profile @relation(fields: [user_id], references: [user_id]) // Foreign key relation to Startup_Profile
+  startup     Startup_Profile @relation(fields: [user_id], references: [user_id],onDelete: Cascade) // Foreign key relation to Startup_Profile
 
   @@id([founderid, user_id]) // Composite primary key
 }
@@ -78,5 +78,5 @@ model Documents {
   Pan_Number String
   Reg_certificate String @unique
   Dipp_number String @unique
-  startup     Startup_Profile @relation(fields: [user_id], references: [user_id]) 
+  startup     Startup_Profile @relation(fields: [user_id], references: [user_id],onDelete: Cascade) 
 }
