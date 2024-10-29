@@ -1,10 +1,18 @@
-import express from "express";
+import { Router } from "express";
+import {
+  registerFounder,
+  registerAdmin,
+  loginFounder,
+  loginAdmin,
+  refreshToken,
+} from "../controllers/auth.controller";
 
-import * as auth from "../controllers/auth.controller";
+const router = Router();
 
-const router = express.Router();
-
-router.post("/signup", auth.Register);
-router.post("/login", auth.Login);
+router.post("/register-founder", registerFounder);
+router.post("/register-admin", registerAdmin);
+router.post("/login-founder", loginFounder);
+router.post("/login-admin", loginAdmin);
+router.post("/refresh", refreshToken);
 
 export default router;

@@ -9,74 +9,79 @@ datasource db {
 }
 
 model Startup_Profile {
-  user_id                  String                @id @default(cuid()) // Primary key
-  name                     String // Required field
-  entity_name              String // Required field
-  sector                   String // Required field
-  categories               String // Required field
-  year                     Int // Required field
-  brand_name               String? // Optional field
-  entityRegistrationStatus Boolean? // Optional field
-  stage                    String? // Optional field
-  detailsText              String? // Optional text field
-  size                     Int // Required field
-  incubation_status        Boolean // Required field
-  startupIndiaRegister     Boolean // Required field
-  registrations            Registration_Details? // Since it's a one-to-one relationship, 
-  //Prisma enforces optionality in the relationship field on one side because it's not possible to guarantee this constraint at the database level.
-  addresses Registered_address[]
-  founders Founders[]
-  documents Documents?
-  @@unique([user_id]) // Unique constraint on user_id
+  user_id                  String                @id @default(cuid())
+  name                     String
+  entity_name              String
+  sector                   String
+  categories               String
+  year                     Int
+  brand_name               String?
+  entityRegistrationStatus Boolean?
+  stage                    String?
+  detailsText              String?
+  size                     Int
+  incubation_status        Boolean
+  startupIndiaRegister     Boolean
+  registrations            Registration_Details?
+  addresses                Registered_address[]
+  founders                 Founders[]
+  documents                Documents?
 
+  @@unique([user_id])
 }
 
 model Registration_Details {
   user_id         String          @unique
   reg_number      String          @unique
   reg_date        DateTime
-  reg_certificate String //this stores a file path or reference
+  reg_certificate String
   gst             String
   ipr             Boolean
-  startup         Startup_Profile @relation(fields: [user_id], references: [user_id],onDelete: Cascade) // Foreign key relation to Startup_Profile
+  startup         Startup_Profile @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
 
-  @@id([user_id, reg_number]) // Composite primary key
+  @@id([user_id, reg_number])
 }
 
 model Registered_address {
-  addr_id      Int  @default(autoincrement())
-  addrLine1   String
-  addLine2    String
-  state       String
-  city        String
-  district    String
-  pincode     Int
-  user_id      String
-  startup     Startup_Profile @relation(fields: [user_id], references: [user_id],onDelete: Cascade) // Foreign key relation to Startup_Profile
+  addr_id   Int             @default(autoincrement())
+  addrLine1 String
+  addLine2  String
+  state     String
+  city      String
+  district  String
+  pincode   Int
+  user_id   String
+  startup   Startup_Profile @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
 
-  @@id([user_id, addr_id]) // Primary key on userId
+  @@id([user_id, addr_id])
 }
 
 model Founders {
-  founderid   String  @default(cuid()) // Primary key
-  user_id      String // Foreign key
+  founderid   String @id @default(cuid())
+  user_id     String
   name        String
   designation String
-  mobile      Int
+  mobile      String
   address     String
   equity      Int
-  
-  startup     Startup_Profile @relation(fields: [user_id], references: [user_id],onDelete: Cascade) // Foreign key relation to Startup_Profile
+  password    String
+  email       String @unique
 
-  @@id([founderid, user_id]) // Composite primary key
+  startup Startup_Profile @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
 }
 
 model Documents {
-  user_id String @id @unique
-  pitch_deck String 
-  Aadhar_Number BigInt
-  Pan_Number String
-  Reg_certificate String @unique
-  Dipp_number String @unique
-  startup     Startup_Profile @relation(fields: [user_id], references: [user_id],onDelete: Cascade) 
+  user_id         String          @id @unique
+  pitch_deck      String
+  Aadhar_Number   BigInt
+  Pan_Number      String
+  Reg_certificate String          @unique
+  Dipp_number     String          @unique
+  startup         Startup_Profile @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+}
+
+model Admin {
+  admin_id String @id @default(cuid())
+  email    String @unique
+  password String
 }
