@@ -85,3 +85,25 @@ model Admin {
   email    String @unique
   password String
 }
+
+model Events {
+  id          String   @id @default(cuid())
+  name        String
+  posterLink  String
+  date        DateTime
+  description String
+
+  registrations Event_Registrations[]
+}
+
+model Event_Registrations {
+  id      Int    @id @default(autoincrement())
+  eventId String
+  name    String
+  number  String
+  email   String
+
+  event Events @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@index([eventId])
+}
