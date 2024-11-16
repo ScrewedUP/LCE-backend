@@ -19,13 +19,14 @@ export const getRegistrations = async (req: Request, res: Response) => {
 
 export const registerEvent = async (req: Request, res: Response) => {
   const { eventId, name, number, email } = req.body;
-
   try {
     const registration = await prisma.event_Registrations.create({
       data: { eventId, name, number, email },
     });
     res.status(201).json(registration);
   } catch (error) {
-    res.status(500).json({ error: "Failed to register for event" });
+    res
+      .status(500)
+      .json({ error: "Failed to register for event", body: req.body });
   }
 };

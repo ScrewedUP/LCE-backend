@@ -20,3 +20,21 @@ export const addEvent = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Failed to add event" });
   }
 };
+
+export const updateEvent = async (req: Request, res: Response) => {
+  const eventId = req.params.id;
+  const { name, posterLink, date, description } = req.body;
+  try {
+    const eventToUpdate = await prisma.events.update({
+      where: {
+        id: eventId,
+      },
+      data: { name, posterLink, date, description },
+    });
+    res
+      .status(201)
+      .json({ success: "Event Updated Successfully", eventToUpdate });
+  } catch (e) {
+    res.status(500).json({ error: "Error while updating" });
+  }
+};

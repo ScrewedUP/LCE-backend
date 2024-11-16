@@ -3,6 +3,7 @@ import http from "http";
 import cors from "cors";
 import authRouter from "./routes/authRouter";
 import eventsRouter from "./routes/eventsRoute";
+import registerRouter from "./routes/registerRoute";
 import eventRegistrationsRouter from "./routes/eventRegistrationsRoute";
 import { PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
@@ -20,6 +21,7 @@ async function main() {
   app.use("/auth", authRouter);
   app.use("/events", eventsRouter);
   app.use("/registrations", eventRegistrationsRouter);
+  app.use("/register", registerRouter);
   app.all("*", (req: Request, res: Response) => {
     res.status(404).json({ error: `Route ${req.originalUrl} not found` });
   });

@@ -73,7 +73,7 @@ model Founders {
 model Documents {
   user_id         String          @id @unique
   pitch_deck      String
-  Aadhar_Number   BigInt
+  Aadhar_Number   String
   Pan_Number      String
   Reg_certificate String          @unique
   Dipp_number     String          @unique
