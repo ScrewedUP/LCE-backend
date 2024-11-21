@@ -30,3 +30,22 @@ export const registerEvent = async (req: Request, res: Response) => {
       .json({ error: "Failed to register for event", body: req.body });
   }
 };
+
+export const getRegistrationsByEmail = async (req: Request, res: Response) => {
+  const { email } = req.query;
+
+  if (!email || typeof email !== "string") {
+    return res.status(400).json({ error: "Email is required" });
+  }
+
+  try {
+    const registrations = await prisma.event_Registrations.findMany({
+      where: { email },
+    });
+    res.status(200).json(registrations);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Failed to fetch registrations for the user" });
+  }
+};

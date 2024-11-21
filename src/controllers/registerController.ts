@@ -55,6 +55,7 @@ export const registerStartup = async (req: Request, res: Response) => {
         detailsText,
         size,
         incubation_status,
+        isApproved: false,
         startupIndiaRegister,
         registrations: {
           create: {

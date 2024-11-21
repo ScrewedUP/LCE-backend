@@ -21,6 +21,7 @@ model Startup_Profile {
   detailsText              String?
   size                     Int
   incubation_status        Boolean
+  isApproved               Boolean
   startupIndiaRegister     Boolean
   registrations            Registration_Details?
   addresses                Registered_address[]
@@ -106,4 +107,24 @@ model Event_Registrations {
   event Events @relation(fields: [eventId], references: [id], onDelete: Cascade)
 
   @@index([eventId])
+}
+
+model Program {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  icon        String // We will store the icon name or path as a string
+  features    String[] // Array of strings representing features
+}
+
+model Startup {
+  id          Int    @id @default(autoincrement())
+  name        String
+  icon        String // We will store the icon name or path as a string
+  description String
+  website     String
+  category    String
+  impact      String
+  team        Int
+  growth      String
 }

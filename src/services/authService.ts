@@ -53,7 +53,8 @@ export const registerAdmin = async (email: string, password: string) => {
 export const loginFounder = async (email: string, password: string) => {
   try {
     const founder = await prisma.founders.findUnique({ where: { email } });
-    if (!founder || !(await comparePassword(password, founder.password))) {
+
+    if (!founder || !(password === founder.password)) {
       throw new Error("Invalid credentials");
     }
     const accessToken = generateAccessToken(
